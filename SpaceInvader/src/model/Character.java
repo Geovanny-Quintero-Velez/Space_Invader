@@ -1,6 +1,7 @@
 package model;
 
 public abstract class Character {
+	private boolean died = false;
 	private String path;
 	protected int x;
 	protected int y;
@@ -75,8 +76,13 @@ public abstract class Character {
 		this.path = path;
 	}
 	
-	public void move() {
-		x += deltaX;
-		y += deltaY;
+	public void move(int i) {
+		if(i == 0) {
+			x += deltaX;
+		}else {
+			y += deltaY;
+		}
+		
+	
 	}
 }

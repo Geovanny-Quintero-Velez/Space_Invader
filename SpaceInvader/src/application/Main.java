@@ -1,5 +1,7 @@
 package application;
 	
+import java.util.ArrayList;
+
 import controller.MenuController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -61,7 +63,7 @@ public class Main extends Application {
 		return game.getPlayer();
 	}
 	
-	public Alien[] getAliens() {
+	public ArrayList<Alien> getAliens() {
 		return game.getAliens();
 	}
 	

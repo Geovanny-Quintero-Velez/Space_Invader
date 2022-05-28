@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class Game {
-	private Alien[] aliens;
+	private ArrayList<Alien> aliens;
 	private Nave player;
 	private ArrayList<Bala> balas;
 	public void setBalas(ArrayList<Bala> balas) {
@@ -29,18 +29,18 @@ public class Game {
 		deltaXA=10;
 		deltaYN=10;
 		deltaXN=10;
-		aliens=new Alien[amountAliens];
+		aliens = new ArrayList<>();
 		for(int i=0;i<amountAliens;i++) {
-			aliens[i]=new Alien("file:.\\src\\sprites\\alien.png",sizeW*i+30, 0, sizeL, sizeW, 0, deltaYA);
+			aliens.add(new Alien("file:.\\src\\sprites\\alien.png",sizeW*i+30, 0, sizeL, sizeW, 0, deltaYA));
 		}
 		player=new Nave("file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
 	}
 	
-	public Alien[] getAliens() {
+	public ArrayList<Alien> getAliens() {
 		return aliens;
 	}
 
-	public void setAliens(Alien[] aliens) {
+	public void setAliens(ArrayList<Alien> aliens) {
 		this.aliens = aliens;
 	}
 
@@ -53,9 +53,9 @@ public class Game {
 	}
 	
 	public void moveAlien() {
-		for(int i=0;i<aliens.length;i++) {
-			if(aliens[i].getDeltaY()+aliens[i].getY()>0) {
-				aliens[i].move();
+		for(Alien alien:aliens) {
+			if(alien.getDeltaY()+alien.getY()>0) {
+				alien.move(0);
 			}
 		}
 	}
@@ -90,12 +90,20 @@ public class Game {
 	public ArrayList<Bala> getBalas() {
 		return balas;
 	}
+	
 
 	public void actualize() {
 		moveAlien();
 		for(Bala bala:balas) {
-			bala.move();
+			bala.move(1);
+			for(Alien alien:aliens) {
+				if(alien.getY() == bala.getY() && ((alien.getX()-alien.getWidth()) < (bala.getX()-bala.getWidth()) || (alien.getX()+alien.getWidth()) > (bala.getX()+bala.getWidth()))) {
+					System.out.println(aliens.remove(alien));
+					break;
+				}
+			}
 		}
+		
 		
 	}
 	

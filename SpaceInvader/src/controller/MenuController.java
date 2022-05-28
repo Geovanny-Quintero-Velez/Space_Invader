@@ -33,10 +33,10 @@ public class MenuController {
 	
 	public void paint() {
 		Platform.runLater(()->{
-			Alien[] aliens=main.getGame().getAliens();
+			ArrayList<Alien> aliens=main.getGame().getAliens();
 			Nave player=main.getGame().getPlayer();
 			ArrayList<Bala> balas=main.getGame().getBalas();
-			Image imageAl=new Image(aliens[0].getPath());
+			Image imageAl=new Image(aliens.get(0).getPath());
 			Image imageP=new Image(player.getPath());
 			if(balas.size()>0) {
 				Image imageB=new Image(balas.get(0).getPath());
@@ -44,8 +44,8 @@ public class MenuController {
 					gr.drawImage(imageB, bala.getX(), bala.getY(),bala.getLenght(),bala.getWidth());
 				}
 			}
-			for(int i=0;i<aliens.length;i++) {
-				gr.drawImage(imageAl, aliens[i].getX(), aliens[i].getY(),aliens[i].getLenght(),aliens[i].getWidth());
+			for(Alien alien:aliens) {
+				gr.drawImage(imageAl, alien.getX(), alien.getY(),alien.getLenght(),alien.getWidth());
 			}
 			gr.drawImage(imageP,player.getX(),player.getY(),player.getLenght(),player.getWidth());
 		});
@@ -61,7 +61,7 @@ public class MenuController {
 			main.disparar();
 		}
 	}
-	
+
 	public void actualize() {
 		Thread hilo = new Thread(() -> {
 			while (true) {
@@ -75,8 +75,8 @@ public class MenuController {
 					e.printStackTrace();
 				}
 			}
-
 		});
 		hilo.start();
 	}
+
 }

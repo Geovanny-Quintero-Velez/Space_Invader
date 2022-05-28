@@ -28,4 +28,5 @@ public class Nave extends Character {
 		setDeltaY(getDeltaX()*dir);
 		super.y+=super.deltaY;
 	}
+
 }
