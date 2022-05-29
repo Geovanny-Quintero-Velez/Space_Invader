@@ -22,8 +22,8 @@ public class Game {
 	private int deltaYN;
 	private double deltaXA;
 	private double deltaYA;
-	
-	public Game(int amountAliens) {
+	private int amountAliens;
+	public Game() {
 		isOngoing=true;
 		ALIENS_VALUE=100;
 		victory=true;
@@ -36,28 +36,28 @@ public class Game {
 		deltaXA=0;
 		deltaYN=10;
 		deltaXN=10;
-		int posYA=0;
-	
-		int mult=0;
+		amountAliens=10;
 		aliens = new ArrayList<>();
-		threads=new MoveAlien[amountAliens];
+		threads=new MoveAlien[40];
 		player=new Nave("file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
+		createAliens(amountAliens);
+	}
+	
+	public void createAliens(int amountAliens) {
+		int posYA=0;
+		int mult=0;
 		for(int i=0;i<amountAliens;i++) {
 			Alien alien=new Alien("file:.\\src\\sprites\\alien.png",(sizeW+10)*mult, posYA, sizeL, sizeW, deltaXA, deltaYA);
 			aliens.add(alien);
 			mult++;
 			if(i%10==9&&i!=0) {
-				
 				posYA+=30;
 				mult=0;
 			}
-			
 			MoveAlien thread=new MoveAlien(alien);
 			threads[i]=thread;
 			thread.start();
 		}
-		
-		
 	}
 	
 	public ArrayList<Alien> getAliens() {
@@ -117,6 +117,19 @@ public class Game {
 			Bala bala=balas.get(i);
 			bala.move(1);
 		}
+		if(isOngoing&&aliens.size()==0) {
+			balas.clear();
+			amountAliens+=10;
+			if(amountAliens<=40) {
+				createAliens(amountAliens);
+			}else {
+				isOngoing=false;
+			}
+			
+		}
+		if(player.getPoints()==ALIENS_VALUE*100) {
+			
+		}
 			
 	}
 	
@@ -162,12 +175,7 @@ public class Game {
 								bala.setUsed(true);
 								aliens.remove(alien);
 								alien=null;
-								System.out.println("Murio");
 								player.increasePoints(ALIENS_VALUE);
-								System.out.println(aliens.size());
-								if(aliens.size()==0){
-									isOngoing=false;
-								}
 							}
 						}
 					

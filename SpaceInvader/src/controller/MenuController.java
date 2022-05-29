@@ -41,8 +41,8 @@ public class MenuController {
 			Nave player=main.getGame().getPlayer();
 			ArrayList<Bala> balas=main.getGame().getBalas();
 			if(main.getGame().isOngoing()) {
-				Image imageAl=new Image(aliens.get(0).getPath());
 				
+				Image imageAl=new Image(aliens.get(0).getPath());
 				Image imageP=new Image(player.getPath());
 				if(balas.size()>0) {
 					Image imageB=new Image(balas.get(0).getPath());

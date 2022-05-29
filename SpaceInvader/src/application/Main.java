@@ -20,7 +20,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		game=new Game(30);
+		game=new Game();
 		try {
 			BorderPane root;
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Menu.fxml"));
