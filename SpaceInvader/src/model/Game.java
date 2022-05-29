@@ -100,7 +100,8 @@ public class Game {
 	}
 	
 	public void endGame() {
-		System.out.println("Amount points"+player.getPoints());
+		//TODO do top list
+		
 	}
 	
 	public void disparar() {
@@ -181,7 +182,7 @@ public class Game {
 					
 					}
 					if(y1>=player.getY()) {
-						System.out.println("Perdio");
+						
 						aliens.remove(alien);
 						alien=null;
 						victory=false;
@@ -189,7 +190,7 @@ public class Game {
 					}
 					sleep(100);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
