@@ -41,28 +41,36 @@ public class MenuController {
 			Nave player=main.getGame().getPlayer();
 			ArrayList<Bala> balas=main.getGame().getBalas();
 			if(main.getGame().isOngoing()) {
-				
-				Image imageAl=new Image(aliens.get(0).getPath());
-				Image imageP=new Image(player.getPath());
-				if(balas.size()>0) {
-					Image imageB=new Image(balas.get(0).getPath());
-					for(Bala bala:balas) {
-						if(!bala.isUsed()) {
-							gr.drawImage(imageB, bala.getX(), bala.getY(),bala.getLenght(),bala.getWidth());
+				if(aliens.size()>0) {
+					Image imageAl=new Image(aliens.get(0).getPath());
+					Image imageP=new Image(player.getPath());
+					if(balas.size()>0) {
+						Image imageB=new Image(balas.get(0).getPath());
+						for(Bala bala:balas) {
+							if(!bala.isUsed()) {
+								gr.drawImage(imageB, bala.getX(), bala.getY(),bala.getLenght(),bala.getWidth());
+							}
 						}
 					}
+					ArrayList<Bala> balasAliens=main.getGame().getBalasAliens();
+					if(balasAliens.size()>0) {
+						Image imageB=new Image(balasAliens.get(0).getPath());
+						for(Bala bala:balasAliens) {
+							if(!bala.isUsed()) {
+								gr.drawImage(imageB, bala.getX(), bala.getY(),bala.getLenght(),bala.getWidth());
+							}
+						}
+					}
+					for(Alien alien:aliens) {
+						gr.drawImage(imageAl, alien.getX(), alien.getY(),alien.getLenght(),alien.getWidth());
+					}
+					gr.drawImage(imageP,player.getX(),player.getY(),player.getLenght(),player.getWidth());
+					
+					gr.setFill(Color.TEAL);
+					gr.setFont(Font.font("Verdana",FontWeight.BOLD,25));
+					gr.setTextAlign(TextAlignment.CENTER);
+					gr.fillText(main.getPlayer().getPoints()+"", 50, 30);
 				}
-				for(Alien alien:aliens) {
-					gr.drawImage(imageAl, alien.getX(), alien.getY(),alien.getLenght(),alien.getWidth());
-				}
-				gr.drawImage(imageP,player.getX(),player.getY(),player.getLenght(),player.getWidth());
-				
-				gr.setFill(Color.TEAL);
-				gr.setFont(Font.font("Verdana",FontWeight.BOLD,25));
-				gr.setTextAlign(TextAlignment.CENTER);
-				gr.fillText(main.getPlayer().getPoints()+"", 40, 30);
-				
-				
 			}else {
 				main.getGame().endGame();
 				gr.setFont(Font.font("Verdana", FontWeight.BOLD,20));

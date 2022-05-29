@@ -1,11 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 	private ArrayList<Alien> aliens;
 	private Nave player;
 	private ArrayList<Bala> balas;
+	private ArrayList<Bala> balasAliens;
+	
 	private MoveAlien[] threads;
 	public final int ALIENS_VALUE;
 	private boolean victory;
@@ -23,11 +26,14 @@ public class Game {
 	private double deltaXA;
 	private double deltaYA;
 	private int amountAliens;
-	public Game() {
+	public final int MAX_ALIENS;
+	public Game(String name) {
+		MAX_ALIENS=100;
 		isOngoing=true;
 		ALIENS_VALUE=100;
 		victory=true;
 		balas=new ArrayList<>();
+		balasAliens=new ArrayList<>();
 		HEIGHT=400;
 		WIDTH=300;
 		sizeW=15;
@@ -38,7 +44,7 @@ public class Game {
 		deltaXN=10;
 		amountAliens=10;
 		aliens = new ArrayList<>();
-		threads=new MoveAlien[40];
+		threads=new MoveAlien[MAX_ALIENS];
 		player=new Nave("file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
 		createAliens(amountAliens);
 	}
@@ -92,7 +98,7 @@ public class Game {
 					player.moveX(dir);
 				}
 			}
-			
+		
 			
 		}else if(i==1) {
 			player.moveY(dir);
@@ -111,6 +117,9 @@ public class Game {
 	public ArrayList<Bala> getBalas() {
 		return balas;
 	}
+	public ArrayList<Bala> getBalasAliens() {
+		return balasAliens;
+	}
 	
 
 	public void actualize() {
@@ -118,8 +127,34 @@ public class Game {
 			Bala bala=balas.get(i);
 			bala.move(1);
 		}
+		for(int i=0;i<balasAliens.size();i++) {
+			Bala bala=balasAliens.get(i);
+			bala.move(1);	
+		}
+		for(int ind=0;ind<balasAliens.size();ind++) {
+			Bala bala=balasAliens.get(ind);
+			int y1p=player.getY();
+			int y2p=player.getY()+player.getLenght();
+			int x1p=player.getX();
+			int x2p=player.getX()+player.getWidth();
+			if(bala!=null) {
+				int bX=bala.getX();
+				int bY=bala.getY();
+				if(bX>x1p&&bX<x2p&&bY<y2p&&bY>y1p) {
+					isOngoing=false;
+					victory=false;
+				}
+				if(bY>y1p+5) {
+					balasAliens.remove(ind);
+					ind--;
+				}
+			}
+			
+			
+		}
 		if(isOngoing&&aliens.size()==0) {
 			balas.clear();
+			balasAliens.clear();
 			amountAliens+=10;
 			if(amountAliens<=40) {
 				createAliens(amountAliens);
@@ -128,7 +163,7 @@ public class Game {
 			}
 			
 		}
-		if(player.getPoints()==ALIENS_VALUE*100) {
+		if(player.getPoints()==ALIENS_VALUE*MAX_ALIENS) {
 			isOngoing=false;
 		}
 			
@@ -162,6 +197,13 @@ public class Game {
 		public void run() {
 			while(alien!=null) {
 				try {
+					Random r=new Random();
+					int ram=r.nextInt(1000);
+					if(ram<10) {
+						Bala bala=new Bala("file:.\\src\\sprites\\balaAlien.png",alien.getX()+(alien.getWidth()/2+5),alien.getY(), 6, 8, 0, 5);
+						balasAliens.add(bala);
+					}
+					
 					alien.move(1);
 					int x1=alien.getX();
 					int y1=alien.getY();
@@ -182,13 +224,16 @@ public class Game {
 					
 					}
 					if(y1>=player.getY()) {
-						
 						aliens.remove(alien);
 						alien=null;
 						victory=false;
 						isOngoing=false;
 					}
-					sleep(100);
+					
+					
+					
+					
+					sleep(1000/10);
 				} catch (InterruptedException e) {
 					
 					e.printStackTrace();

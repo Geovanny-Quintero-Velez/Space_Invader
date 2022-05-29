@@ -2,10 +2,12 @@ package model;
 
 public class Nave extends Character {
 	private int points;
+	private String name;
 	
 	
-	public Nave(String path, int x, int y, int lenght, int width, int deltaX, int deltaY) {
+	public Nave(String name, String path, int x, int y, int lenght, int width, int deltaX, int deltaY) {
 		super(path, x, y, lenght, width, deltaX, deltaY);
+		this.name = name;
 		points=0;
 	}
 	
@@ -36,6 +38,10 @@ public class Nave extends Character {
 
 	public int getPoints() {
 		return points;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }
