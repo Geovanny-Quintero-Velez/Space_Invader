@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import application.Main;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -11,7 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import model.Alien;
 import model.Bala;
@@ -57,20 +57,20 @@ public class MenuController {
 				}
 				gr.drawImage(imageP,player.getX(),player.getY(),player.getLenght(),player.getWidth());
 				
-				
-				gr.setFont(Font.font("Times New Roman",30));
+				gr.setFill(Color.TEAL);
+				gr.setFont(Font.font("Verdana",FontWeight.BOLD,25));
 				gr.setTextAlign(TextAlignment.CENTER);
-				gr.fillText(main.getPlayer().getPoints()+"", 30, 30);
+				gr.fillText(main.getPlayer().getPoints()+"", 40, 30);
 				
 				
 			}else {
 				main.getGame().endGame();
-				gr.setFont(Font.font("Times New Roman",30));
+				gr.setFont(Font.font("Verdana", FontWeight.BOLD,20));
 				gr.setTextAlign(TextAlignment.CENTER);
 				gr.fillText(main.getPlayer().getPoints()+"", 30, 30);
 				if(main.getGame().isVictory()) {
-					gr.fillText("Has Ganado", 130,   180);
-				}else gr.fillText("Has Perdido", 130,   180);;
+					gr.fillText("¡GANASTE!", 130, 180);
+				}else gr.fillText("¡PERDISTE!", 130, 180);;
 				
 			}
 			
@@ -96,7 +96,6 @@ public class MenuController {
 					main.actualizeGame();
 					paint();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

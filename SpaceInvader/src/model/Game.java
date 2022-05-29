@@ -128,7 +128,7 @@ public class Game {
 			
 		}
 		if(player.getPoints()==ALIENS_VALUE*100) {
-			
+			isOngoing=false;
 		}
 			
 	}
