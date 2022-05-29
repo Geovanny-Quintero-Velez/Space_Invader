@@ -129,7 +129,9 @@ public class Game {
 		}
 		for(int i=0;i<balasAliens.size();i++) {
 			Bala bala=balasAliens.get(i);
-			bala.move(1);	
+			if(bala!=null) {
+				bala.move(1);
+			}	
 		}
 		for(int ind=0;ind<balasAliens.size();ind++) {
 			Bala bala=balasAliens.get(ind);
@@ -140,7 +142,7 @@ public class Game {
 			if(bala!=null) {
 				int bX=bala.getX();
 				int bY=bala.getY();
-				if(bX>x1p&&bX<x2p&&bY<y2p&&bY>y1p) {
+				if(bX>x1p&&bX<x2p+5&&bY<y2p&&bY>y1p) {
 					isOngoing=false;
 					victory=false;
 				}

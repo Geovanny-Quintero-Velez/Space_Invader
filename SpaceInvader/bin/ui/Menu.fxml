@@ -5,6 +5,6 @@
 
 <BorderPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
    <center>
-      <Canvas fx:id="canvas1" height="350.0" onKeyPressed="#movePlayer" width="250.0" BorderPane.alignment="CENTER" />
+      <Canvas fx:id="canvas1" height="402.0" onKeyPressed="#movePlayer" width="301.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

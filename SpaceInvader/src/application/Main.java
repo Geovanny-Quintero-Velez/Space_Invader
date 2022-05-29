@@ -28,13 +28,13 @@ public class Main extends Application {
 			root = (BorderPane)loader.load();
 			LoginController controller = loader.getController();
 			controller.setMain(this);
-			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("../ui/application.css").toExternalForm());
 			Stage stage = new Stage();
 			stage.setScene(scene);
 			stage.show();
 			currentStage = stage;
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -46,7 +46,6 @@ public class Main extends Application {
 			BorderPane loginR = (BorderPane)loader.load();
 			LoginController controller = loader.getController();
 			controller.setMain(this);
-			
 			Stage stage = currentStage;
 			Scene scene = new Scene(loginR);
 			stage.setScene(scene);
