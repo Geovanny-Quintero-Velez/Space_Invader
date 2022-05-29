@@ -23,7 +23,7 @@ public class Game {
 	private double deltaXA;
 	private double deltaYA;
 	private int amountAliens;
-	public Game() {
+	public Game(String name) {
 		isOngoing=true;
 		ALIENS_VALUE=100;
 		victory=true;
@@ -39,7 +39,7 @@ public class Game {
 		amountAliens=10;
 		aliens = new ArrayList<>();
 		threads=new MoveAlien[40];
-		player=new Nave("file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
+		player=new Nave(name, "file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
 		createAliens(amountAliens);
 	}
 	

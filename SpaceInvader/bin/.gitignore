@@ -1,4 +1,4 @@
-/model/
-/application/
+/ui/
 /controller/
-/sprites/
+/application/
+/model/
