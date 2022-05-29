@@ -45,7 +45,7 @@ public class Game {
 		amountAliens=10;
 		aliens = new ArrayList<>();
 		threads=new MoveAlien[MAX_ALIENS];
-		player=new Nave("file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
+		player=new Nave(name,"file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
 		createAliens(amountAliens);
 	}
 	
