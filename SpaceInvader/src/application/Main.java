@@ -20,7 +20,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
-		game=new Game(10);
+		game=new Game(30);
 		try {
 			BorderPane root;
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Menu.fxml"));
@@ -32,8 +32,8 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("../ui/application.css").toExternalForm());
 			Stage stage = new Stage();
 			stage.setScene(scene);
-			stage.setWidth(game.WIDTH);
-			stage.setHeight(game.HEIGHT);
+			stage.setWidth(game.WIDTH-33);
+			stage.setHeight(game.HEIGHT-10);
 			stage.show();
 			currentStage = stage;
 			controller.actualize();

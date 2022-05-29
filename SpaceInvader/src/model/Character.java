@@ -1,32 +1,31 @@
 package model;
 
 public abstract class Character {
-	private boolean died = false;
 	private String path;
 	protected int x;
 	protected int y;
 	private int lenght;
 	private int width;
-	protected int deltaX;
-	protected int deltaY;
+	protected double deltaX;
+	protected double deltaY;
 	
-	public int getDeltaX() {
+	public double getDeltaX() {
 		return deltaX;
 	}
 
-	public void setDeltaX(int deltaX) {
+	public void setDeltaX(double deltaX) {
 		this.deltaX = deltaX;
 	}
 
-	public int getDeltaY() {
+	public double getDeltaY() {
 		return deltaY;
 	}
 
-	public void setDeltaY(int deltaY) {
+	public void setDeltaY(double deltaY) {
 		this.deltaY = deltaY;
 	}
 
-	public Character(String path,int x,int y,int lenght,int width,int deltaX, int deltaY) {
+	public Character(String path,int x,int y,int lenght,int width,double deltaX, double deltaY) {
 		this.path=path;
 		this.x=x;
 		this.y=y;
@@ -82,7 +81,5 @@ public abstract class Character {
 		}else {
 			y += deltaY;
 		}
-		
-	
 	}
 }

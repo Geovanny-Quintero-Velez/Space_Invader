@@ -6,6 +6,10 @@ public class Game {
 	private ArrayList<Alien> aliens;
 	private Nave player;
 	private ArrayList<Bala> balas;
+	private MoveAlien[] threads;
+	public final int ALIENS_VALUE;
+	private boolean victory;
+	private boolean isOngoing;
 	public void setBalas(ArrayList<Bala> balas) {
 		this.balas = balas;
 	}
@@ -16,24 +20,44 @@ public class Game {
 	private int sizeL;
 	private int deltaXN;
 	private int deltaYN;
-	private int deltaXA;
-	private int deltaYA;
+	private double deltaXA;
+	private double deltaYA;
 	
 	public Game(int amountAliens) {
+		isOngoing=true;
+		ALIENS_VALUE=100;
+		victory=true;
 		balas=new ArrayList<>();
 		HEIGHT=400;
 		WIDTH=300;
 		sizeW=15;
 		sizeL=30;
 		deltaYA=1;
-		deltaXA=10;
+		deltaXA=0;
 		deltaYN=10;
 		deltaXN=10;
+		int posYA=0;
+	
+		int mult=0;
 		aliens = new ArrayList<>();
-		for(int i=0;i<amountAliens;i++) {
-			aliens.add(new Alien("file:.\\src\\sprites\\alien.png",sizeW*i+30, 0, sizeL, sizeW, 0, deltaYA));
-		}
+		threads=new MoveAlien[amountAliens];
 		player=new Nave("file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
+		for(int i=0;i<amountAliens;i++) {
+			Alien alien=new Alien("file:.\\src\\sprites\\alien.png",(sizeW+10)*mult, posYA, sizeL, sizeW, deltaXA, deltaYA);
+			aliens.add(alien);
+			mult++;
+			if(i%10==9&&i!=0) {
+				
+				posYA+=30;
+				mult=0;
+			}
+			
+			MoveAlien thread=new MoveAlien(alien);
+			threads[i]=thread;
+			thread.start();
+		}
+		
+		
 	}
 	
 	public ArrayList<Alien> getAliens() {
@@ -52,13 +76,6 @@ public class Game {
 		this.player = player;
 	}
 	
-	public void moveAlien() {
-		for(Alien alien:aliens) {
-			if(alien.getDeltaY()+alien.getY()>0) {
-				alien.move(0);
-			}
-		}
-	}
 	
 	public void movePlayer(int i,int dir) {
 		
@@ -66,16 +83,15 @@ public class Game {
 			
 			if(dir==-1) {
 				
-				if(player.getX()- Math.abs(player.getDeltaX())>0) {
+				if(player.getX()- Math.abs(player.getDeltaX())>-10) {
 					player.moveX(dir);
 				}
 			}else if(dir==1) {
-				System.out.println(player.getX());
+				
 				if(player.getX()+ Math.abs(player.getDeltaX()) <230) {
 					player.moveX(dir);
 				}
 			}
-			
 			
 			
 		}else if(i==1) {
@@ -83,8 +99,12 @@ public class Game {
 		}
 	}
 	
+	public void endGame() {
+		System.out.println("Amount points"+player.getPoints());
+	}
+	
 	public void disparar() {
-		balas.add(new Bala("file:.\\src\\sprites\\bala.png",player.getX()+(player.getWidth()/2+5),player.getY(), 20, 30, 0, -10));
+		balas.add(new Bala("file:.\\src\\sprites\\bala.png",player.getX()+(player.getWidth()/2+5),player.getY(), 6, 8, 0, -10));
 	}
 
 	public ArrayList<Bala> getBalas() {
@@ -93,18 +113,81 @@ public class Game {
 	
 
 	public void actualize() {
-		moveAlien();
-		for(Bala bala:balas) {
+		for(int i=0;i<balas.size();i++) {
+			Bala bala=balas.get(i);
 			bala.move(1);
-			for(Alien alien:aliens) {
-				if(alien.getY() == bala.getY() && ((alien.getX()-alien.getWidth()) < (bala.getX()-bala.getWidth()) || (alien.getX()+alien.getWidth()) > (bala.getX()+bala.getWidth()))) {
-					System.out.println(aliens.remove(alien));
-					break;
-				}
-			}
+		}
+			
+	}
+	
+	public boolean isVictory() {
+		return victory;
+	}
+
+	public void setVictory(boolean victory) {
+		this.victory = victory;
+	}
+
+	public boolean isOngoing() {
+		return isOngoing;
+	}
+
+	public void setOngoing(boolean isOngoing) {
+		this.isOngoing = isOngoing;
+	}
+
+	private class MoveAlien extends Thread{
+		private Alien alien;
+		
+		public MoveAlien(Alien alien) {
+			this.alien=alien;
 		}
 		
 		
+		@Override
+		public void run() {
+			while(alien!=null) {
+				try {
+					alien.move(1);
+					int x1=alien.getX();
+					int y1=alien.getY();
+					int x2=alien.getX()+alien.getWidth();
+					int y2=alien.getY()-alien.getLenght();
+					for(int i=0;i<balas.size();i++) {
+						Bala bala=balas.get(i);
+						if(!bala.isUsed()) {
+							int bX=bala.getX();
+							int bY=bala.getY();
+							if(bX>x1&&bX<x2&&bY<y2) {
+								bala.setUsed(true);
+								aliens.remove(alien);
+								alien=null;
+								System.out.println("Murio");
+								player.increasePoints(ALIENS_VALUE);
+								System.out.println(aliens.size());
+								if(aliens.size()==0){
+									isOngoing=false;
+								}
+							}
+						}
+					
+					}
+					if(y1>=player.getY()) {
+						System.out.println("Perdio");
+						aliens.remove(alien);
+						alien=null;
+						victory=false;
+						isOngoing=false;
+					}
+					sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+
 	}
 	
 }
