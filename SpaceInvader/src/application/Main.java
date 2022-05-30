@@ -11,6 +11,7 @@ import java.util.Collections;
 
 import comparator.CompareToName;
 import comparator.CompareToScore;
+import controller.ClassificationController;
 import controller.LoginController;
 import controller.MenuController;
 import javafx.application.Application;
@@ -31,6 +32,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
+		
 		deserialize();
 		Collections.sort(top, new CompareToName());
 		try {
@@ -56,7 +58,7 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Classification.fxml"));
 			BorderPane loginR = (BorderPane)loader.load();
-			LoginController controller = loader.getController();
+			ClassificationController controller = loader.getController();
 			controller.setMain(this);
 			Stage stage = currentStage;
 			Scene scene = new Scene(loginR);
@@ -94,7 +96,7 @@ public class Main extends Application {
 			stage.show();
 			controller.actualize();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -128,17 +130,19 @@ public class Main extends Application {
 			while (input.ready()) {
 				
 				String line = input.readLine();
+				
 				String [] data = line.split(";");
 				
 				String name = data[0];
 				int score = Integer.parseInt(data[1]);
 				
 				top.add(new Nave(name, score));
+				
 			}
 			input.close();
 			fr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -151,7 +155,7 @@ public class Main extends Application {
 			fw = new FileWriter(file);
 			BufferedWriter output = new BufferedWriter(fw);
 			for(int j = 0; j< top.size(); j++) {
-				output.write(top.get(j).getName() +";"+ top.get(j).getPoints());
+				output.write(top.get(j).getName() +";"+ top.get(j).getPoints()+"\n");
 			}
 			output.close();
 			fw.close();

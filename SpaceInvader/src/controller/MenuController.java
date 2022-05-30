@@ -86,7 +86,7 @@ public class MenuController {
 						
 					}
 				}
-				main.getTop().add(new Nave(main.getPlayer().getName(), main.getPlayer().getPoints()));
+				main.getTop().add(main.getPlayer());
 				main.showClassification();
 			}
 			

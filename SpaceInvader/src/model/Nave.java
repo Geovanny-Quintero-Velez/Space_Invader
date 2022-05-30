@@ -13,7 +13,7 @@ public class Nave extends Character {
 	
 	public Nave(String name, int score) {
 		this.name = name;
-		points=0;
+		points=score;
 	}
 	
 	public void increasePoints(int increase) {
