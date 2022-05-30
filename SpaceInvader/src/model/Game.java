@@ -8,7 +8,6 @@ public class Game {
 	private Nave player;
 	private ArrayList<Bala> balas;
 	private ArrayList<Bala> balasAliens;
-	
 	private MoveAlien[] threads;
 	public final int ALIENS_VALUE;
 	private boolean victory;
@@ -48,6 +47,9 @@ public class Game {
 		player=new Nave(name,"file:.\\src\\sprites\\nave.png", (WIDTH/2)-sizeW*2, HEIGHT-sizeL*2-15, sizeL, sizeW, deltaXN, deltaYN);
 		createAliens(amountAliens);
 	}
+	
+	
+	
 	
 	public void createAliens(int amountAliens) {
 		int posYA=0;

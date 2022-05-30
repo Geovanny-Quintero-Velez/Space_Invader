@@ -78,8 +78,16 @@ public class MenuController {
 				gr.fillText(main.getPlayer().getPoints()+"", 30, 30);
 				if(main.getGame().isVictory()) {
 					gr.fillText("¡GANASTE!", 130, 180);
-				}else gr.fillText("¡PERDISTE!", 130, 180);;
-				
+				}else {
+					gr.fillText("¡PERDISTE!", 130, 180);
+				}
+				for(int i=0;i<10000;i++) {
+					for(int j=0;j<10000;j++) {
+						
+					}
+				}
+				main.getTop().add(new Nave(main.getPlayer().getName(), main.getPlayer().getPoints()));
+				main.showClassification();
 			}
 			
 		});

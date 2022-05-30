@@ -1,8 +1,16 @@
 package application;
 	
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
+import comparator.CompareToName;
+import comparator.CompareToScore;
 import controller.LoginController;
 import controller.MenuController;
 import javafx.application.Application;
@@ -18,10 +26,13 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	Stage currentStage;
 	Game game;
+	ArrayList<Nave> top = new ArrayList<>();	
 	
 	
 	@Override
 	public void start(Stage primaryStage) {
+		deserialize();
+		Collections.sort(top, new CompareToName());
 		try {
 			BorderPane root;
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Login.fxml"));
@@ -41,6 +52,8 @@ public class Main extends Application {
 	}
 	
 	public void showClassification() {
+		Collections.sort(top, new CompareToScore());
+		serialize();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/Classification.fxml"));
 			BorderPane loginR = (BorderPane)loader.load();
@@ -56,6 +69,15 @@ public class Main extends Application {
 		}
 	}
 	
+
+	public ArrayList<Nave> getTop() {
+		return top;
+	}
+
+	public void setTop(ArrayList<Nave> top) {
+		this.top = top;
+	}
+
 	public void showGame(String name) {
 		game=new Game(name);
 		try {
@@ -76,6 +98,69 @@ public class Main extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Nave binarySearch(int begin, int end, String toFind) {
+		int mid =(begin+end)/2;
+		if(!(begin <= end)) {
+			return null; 
+		}else if(top.size() == 0){
+			return null;
+		}else if(toFind.compareTo(top.get(mid).getName()) == 0) {
+			return top.get(mid);
+		}else if(mid == 0 || mid ==top.size()-1) {
+			return null;
+		}else if(toFind.compareTo(top.get(mid).getName())<0) {
+			return binarySearch(begin, mid-1, toFind);
+		}else if(toFind.compareTo(top.get(mid).getName())>0) {
+			return binarySearch(mid+1, end, toFind);
+		}
+		return null;
+	}
+	
+	public void deserialize() {
+		try {
+			File file = new File(".\\src\\files\\top.txt");
+			
+			FileReader fr;
+			fr = new FileReader(file);
+			
+			BufferedReader input = new BufferedReader(fr);
+			while (input.ready()) {
+				
+				String line = input.readLine();
+				String [] data = line.split(";");
+				
+				String name = data[0];
+				int score = Integer.parseInt(data[1]);
+				
+				top.add(new Nave(name, score));
+			}
+			input.close();
+			fr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void serialize() {
+		try {
+			File file = new File(".\\src\\files\\top.txt");
+			FileWriter fw;
+			fw = new FileWriter(file);
+			BufferedWriter output = new BufferedWriter(fw);
+			for(int j = 0; j< top.size(); j++) {
+				output.write(top.get(j).getName() +";"+ top.get(j).getPoints());
+			}
+			output.close();
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 	
 	public Game getGame() {

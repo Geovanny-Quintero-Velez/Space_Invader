@@ -34,6 +34,10 @@ public abstract class Character {
 		setDeltaX(deltaX);
 		setDeltaY(deltaY);
 	}
+	
+	public Character() {
+		
+	}
 
 	public int getX() {
 		return x;
