@@ -45,7 +45,6 @@ public class Main extends Application {
 			stage.setScene(scene);
 			stage.show();
 			currentStage = stage;
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
