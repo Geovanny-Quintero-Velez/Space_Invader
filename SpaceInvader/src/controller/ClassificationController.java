@@ -19,8 +19,8 @@ public class ClassificationController {
 		
 	}
 	
-	public void setMain(Main main) {
-		this.main=main;
+	public void showTop() {
+		
 		String message = "";
 		ArrayList<Nave> top = main.getTop();
 		int maxPlayers = 5;
@@ -34,5 +34,9 @@ public class ClassificationController {
 			message += "N/A - N/A"+"\n";
 		}
 		classTA.setText(message);
+	}
+	
+	public void setMain(Main main) {
+		this.main=main;
 	}
 }

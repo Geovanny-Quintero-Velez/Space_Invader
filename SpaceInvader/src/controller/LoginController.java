@@ -18,17 +18,7 @@ public class LoginController {
 	@FXML
 	public void startPressed() {
 		String name = nameTF.getText();
-		if(main.binarySearch(0, main.getTop().size(), name)!=null) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Name occupied");
-			alert.setContentText("The name entered has already been used, please enter a new one.");
-			alert.showAndWait();
-			
-		}else{
-			main.showGame(name);
-		}
-			
-		
+		main.showGame(name);
 	}
 	
 	

@@ -60,9 +60,11 @@ public class Main extends Application {
 			BorderPane loginR = (BorderPane)loader.load();
 			ClassificationController controller = loader.getController();
 			controller.setMain(this);
+			controller.showTop();
 			Stage stage = currentStage;
 			Scene scene = new Scene(loginR);
 			stage.setScene(scene);
+			stage.setWidth(600);
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

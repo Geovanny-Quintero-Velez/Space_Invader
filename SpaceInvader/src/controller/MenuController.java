@@ -86,7 +86,12 @@ public class MenuController {
 						
 					}
 				}
-				main.getTop().add(main.getPlayer());
+				Nave lastPlayer = main.binarySearch(0, main.getTop().size(), main.getPlayer().getName());
+				if(lastPlayer!=null) {
+					lastPlayer.increasePoints(main.getPlayer().getPoints());
+				}else {
+					main.getTop().add(main.getPlayer());
+				}
 				main.showClassification();
 			}
 			
